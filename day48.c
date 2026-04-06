@@ -1,13 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct Node {
     int data;
-    struct Node *left;
-    struct Node *right;
+    struct Node* left;
+    struct Node* right;
 };
 
-int countLeafNodes(struct Node *root) {
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+int countLeafNodes(struct Node* root) {
     if (root == NULL)
         return 0;
 
@@ -15,4 +26,16 @@ int countLeafNodes(struct Node *root) {
         return 1;
 
     return countLeafNodes(root->left) + countLeafNodes(root->right);
+}
+
+int main() {
+    struct Node* root = createNode(1);
+    root->left = createNode(2);
+    root->right = createNode(3);
+    root->left->left = createNode(4);
+    root->left->right = createNode(5);
+
+    printf("Leaf nodes = %d\n", countLeafNodes(root));
+
+    return 0;
 }
